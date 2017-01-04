@@ -5,13 +5,13 @@
 const fs = require('fs');
 const jsdom = require('jsdom');
 const expect = require('expect.js');
-const Cookies = require('js-cookie');
 
 const index = fs.readFileSync(require.resolve("../index.js"), { encoding: "utf-8" });
 
 describe('Cookies test', () => {
 
-    let window;
+    let window, document;
+    let Cookies;
     beforeEach(() => {
         const document = jsdom.jsdom('<!doctype html><html><body></body></html>');
         window = document.defaultView;
@@ -20,6 +20,7 @@ describe('Cookies test', () => {
         const scriptEl = document.createElement("script");
         scriptEl.textContent = index;
         document.body.appendChild(scriptEl);
+        Cookies = require('js-cookie');
     });
 
     it('should set and get cookie with my favourite lib', () => {
